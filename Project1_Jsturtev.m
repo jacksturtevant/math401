@@ -96,3 +96,73 @@ proj_3 = proj(1:2, 3)/(proj(4,3))
 % The projections of points (1,2,3), (-2, 3,1), (3, 2, 2) onto the x-y
 % plane from perspective z=10 results in (1.42, 2.56), (-2.22, 3.33),
 % (3.75, 2.5)
+%% Problem 3.27
+% This script will make a square pyramid about the origin with the top at
+% z=sqrt(2). It then rotates the pyramid by pi/4 about the z-axis, then
+% rotates about the y-axis by -pi/2, then translates by (-1, +2, -2)
+pyramid = [1 -1 1 -1 0; 1 1 -1 -1 0; 0 0 0 0 sqrt(2); ones(5,1).'];
+x_line_1 = [ones(10,1).'; -1:2/9:1; zeros(10,1).'; ones(10,1).'];
+x_line_2 = [-1*ones(10,1).'; -1:2/9:1; zeros(10,1).'; ones(10,1).'];
+y_line_1 = [-1:2/9:1; ones(10,1).'; zeros(10,1).'; ones(10,1).'];
+y_line_2 = [ -1:2/9:1; -1*ones(10,1).'; zeros(10,1).'; ones(10,1).'];
+diag_line_1 = [-1:1/9:0; -1:1/9:0; 0:sqrt(2)/9:sqrt(2); ones(10,1).'];
+diag_line_2 = [1:-1/9:0; 1:-1/9:0; 0:sqrt(2)/9:sqrt(2); ones(10,1).'];
+diag_line_3 = [1:-1/9:0; -1:1/9:0; 0:sqrt(2)/9:sqrt(2); ones(10,1).'];
+diag_line_4 = [-1:1/9:0; 1:-1/9:0; 0:sqrt(2)/9:sqrt(2); ones(10,1).'];
+figure(2)
+plot3(pyramid(1,1:5),pyramid(2,1:5),pyramid(3,1:5), 'ro')
+hold on
+plot3(x_line_1(1,1:10),x_line_1(2,1:10),x_line_1(3,1:10), 'b--')
+plot3(x_line_2(1,1:10),x_line_2(2,1:10),x_line_2(3,1:10), 'b--')
+plot3(y_line_1(1,1:10),y_line_1(2,1:10),y_line_1(3,1:10), 'b--')
+plot3(y_line_2(1,1:10),y_line_2(2,1:10),y_line_2(3,1:10), 'b--')
+plot3(diag_line_1(1,1:10),diag_line_1(2,1:10),diag_line_1(3,1:10), 'b--')
+plot3(diag_line_2(1,1:10),diag_line_2(2,1:10),diag_line_2(3,1:10), 'b--')
+plot3(diag_line_3(1,1:10),diag_line_3(2,1:10),diag_line_3(3,1:10), 'b--')
+plot3(diag_line_4(1,1:10),diag_line_4(2,1:10),diag_line_4(3,1:10), 'b--')
+rotation_1 = [cos(pi/4) -sin(pi/4) 0 0; sin(pi/4) cos(pi/4) 0 0; 0 0 1 0; 0 0 0 1];
+rotation_2 = [cos(-pi/2) 0 sin(-pi/2) 0; 0 1 0 0; -sin(-pi/2) 0 cos(-pi/2) 0; 0 0 0 1];
+translation_1 = [1 0 0 -1; 0 1 0 2; 0 0 1 -2; 0 0 0 1];
+final = translation_1 * rotation_2 * rotation_1;
+pyramid = final * pyramid;
+x_line_1 = final * x_line_1;
+x_line_2 = final * x_line_2;
+y_line_1 = final * y_line_1;
+y_line_2 = final * y_line_2;
+diag_line_1 = final * diag_line_1;
+diag_line_2 = final * diag_line_2;
+diag_line_3 = final * diag_line_3;
+diag_line_4 = final * diag_line_4;
+plot3(pyramid(1,1:5),pyramid(2,1:5),pyramid(3,1:5), 'bo')
+hold on
+plot3(x_line_1(1,1:10),x_line_1(2,1:10),x_line_1(3,1:10), 'r--')
+plot3(x_line_2(1,1:10),x_line_2(2,1:10),x_line_2(3,1:10), 'r--')
+plot3(y_line_1(1,1:10),y_line_1(2,1:10),y_line_1(3,1:10), 'r--')
+plot3(y_line_2(1,1:10),y_line_2(2,1:10),y_line_2(3,1:10), 'r--')
+plot3(diag_line_1(1,1:10),diag_line_1(2,1:10),diag_line_1(3,1:10), 'r--')
+plot3(diag_line_2(1,1:10),diag_line_2(2,1:10),diag_line_2(3,1:10), 'r--')
+plot3(diag_line_3(1,1:10),diag_line_3(2,1:10),diag_line_3(3,1:10), 'r--')
+plot3(diag_line_4(1,1:10),diag_line_4(2,1:10),diag_line_4(3,1:10), 'r--')
+xlim([-3 3])
+ylim([-1 5])
+zlim([-4 2])
+xlabel('x')
+ylabel('y')
+zlabel('z')
+%% Problem 6.5
+% a) given the games in the problem, team 1 would be ranked first with
+% 10.5, team 3 would be ranked second with 6.5, team 2 would be ranked 3rd
+% with 0.5, and team 4 would be ranked 4th with -1.25
+A = [1 -1 0 0; 1 0 -1 0; 0 1 -1 0; 0 1 -1 0; 0 1 0 -1; 0 0 1 -1];
+At = A.';
+r = [5 10 -10 7 -14 21].';
+r_adj = At*r;
+A_adj = At*A;
+ranks = inv(A_adj)*r_adj;
+% b) if wins at home are adjusted so that they are worth 25% less, then the
+% ranks would change. Team 3 would be ranked first with 7.625, team 1 would
+% be ranked second with 5.625, team 4 would be ranked 4th with 1.18, and
+% team 2 would be ranked last with -0.375
+r_new = [0.75*5 10 -10 7 -14 0.75*21].';
+r_new_adj = At*r_new;
+ranks_new = inv(A_adj)*r_new_adj;

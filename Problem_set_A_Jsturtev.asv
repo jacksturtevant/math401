@@ -1,0 +1,16 @@
+%% Problem 8.2
+% A)
+% Just by looking at this mini-internet, it seems that the pages should be 
+% ranked as follows, first being highest rank, last being lowest rank
+% P6
+% P4
+% P2
+% P1
+% P3/P5
+% B)
+links = [3,2; 2,1; 2,6; 2,4; 1,6; 6,4; 5,6];
+PM = creategpmatrix(links, 6);
+[V, D] = eig(PM);
+ranks = V(1:6, 1)
+% C)
+% The only disparity 

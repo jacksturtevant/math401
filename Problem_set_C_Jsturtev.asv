@@ -71,9 +71,4 @@ end
 M = genmatrixfromfragment(x,6);
 c = mod(round(det(M)*inv(M)*x(7:12)),2)
 norm(genkey(x(1:6),c,length(x)) - x)
-% Since the norm is 0, then it seems we have a match, so let's good ahead
-% and generate the next 3 bits
-mod([0 1 0 1 0 1]*c, 2)
-mod([1 0 1 0 1 1]*c, 2)
-mod([0 1 0 1 1 0]*c, 2)
-% Using this recursion, the next 3 bits should be 1, 0, 1
+% Since the norm is 0, then it seems we have a match, 

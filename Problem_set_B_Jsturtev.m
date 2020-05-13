@@ -201,8 +201,8 @@ end
 % a)
 % Intuitively, I would cut the 2-3 and 3-4 edge, or the 2-3 and 1-4 edge,
 % or the 1-2 and 3-4 edge
-A = createlaplacian([1 2; 2 3; 3 4; 1 4; 3 5], 5)
-[V, D] = eig(A)
+L = createlaplacian([1 2; 2 3; 3 4; 1 4; 3 5], 5)
+[V, D] = eig(L)
 V(1:5, 2)
 % b) The fiedler Method would make cuts at 2-3 and 3-4
 % c) The results match on one possible cut, the Fielder method does not
